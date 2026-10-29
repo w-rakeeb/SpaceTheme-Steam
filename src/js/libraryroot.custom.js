@@ -1,4 +1,5 @@
 import { waitForElement, createContainerTracker, getFiber, CssClassNames } from './utils.js';
+import { setupHeaderControls } from './headerControls.js';
 
 // Create Loading Screen
 const createLoadingDiv = () => {
@@ -379,6 +380,7 @@ syncUserPanelWidth();
     buttonContainer.appendChild(settingsButton);
 
     parent.appendChild(buttonContainer);
+    setupHeaderControls(parent, buttonContainer);
 })();
 
 

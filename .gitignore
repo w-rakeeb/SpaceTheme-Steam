@@ -1,2 +1,7 @@
 .idea
 metadata.json
+
+graphify-out/
+
+node_modules/
+test-results/

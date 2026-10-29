@@ -1,49 +1,58 @@
-<div align="center">
-<h3><img height="76px" src="https://raw.githubusercontent.com/SpaceTheme/Steam/main/.github/assets/logo.webp"></h3>
+# SpaceTheme for Steam — Top Right Edition
 
-[Community](https://discord.spacetheme.net) | [Support the Project](https://kofi.spacetheme.net) | [Website](https://spacetheme.net)
+A focused fork of [SpaceTheme/Steam](https://github.com/SpaceTheme/Steam), maintained by [w-rakeeb](https://github.com/w-rakeeb). It keeps SpaceTheme's dark styling while bringing the profile and everyday controls back to the titlebar.
 
-![GitHub Org's stars](https://img.shields.io/github/stars/SpaceTheme?style=for-the-badge&logo=github&labelColor=%23111111&color=%231e1e1e)
-<hr>
-</div>
+![Library and centered navigation](.github/screenshots/library.png)
 
-![Preview](https://raw.githubusercontent.com/SpaceTheme/Steam/main/.github/assets/preview/preview.webp)
-<details>
-    <summary>More images (10. Nov. 2025)</summary>
+## Features
 
-|  Library home  |  Library gamepage  |
-|  :---:  |  :---:  |
-|  ![Preview](https://raw.githubusercontent.com/SpaceTheme/Steam/main/.github/assets/preview/libHome.webp)  |  ![Preview](https://raw.githubusercontent.com/SpaceTheme/Steam/main/.github/assets/preview/libGamepage.webp)  |
-|  **Store**  |  **Store Gamepage**  |
-|  ![Preview](https://raw.githubusercontent.com/SpaceTheme/Steam/main/.github/assets/preview/storePage.webp)  |  ![Preview](https://raw.githubusercontent.com/SpaceTheme/Steam/main/.github/assets/preview/storeGamepage.webp)  |
-|  **Store Wishlist**  |  **Store Cart**  |
-|  ![Preview](https://raw.githubusercontent.com/SpaceTheme/Steam/main/.github/assets/preview/storeWishlist.webp)  |  ![Preview](https://raw.githubusercontent.com/SpaceTheme/Steam/main/.github/assets/preview/storeCart.webp)  |
-|  **Store News**  |  **Community**  |
-|  ![Preview](https://raw.githubusercontent.com/SpaceTheme/Steam/main/.github/assets/preview/storeNews.webp)  |  ![Preview](https://raw.githubusercontent.com/SpaceTheme/Steam/main/.github/assets/preview/communityPage.webp)  |
-|  **Friend list & Chat**  |    |
-|  ![Preview](https://raw.githubusercontent.com/SpaceTheme/Steam/main/.github/assets/preview/friendAndChat.webp)  |    |
-</details>
-<details>
-    <summary>More images (Concepts)</summary>
+- **Centered navigation:** Store, Library, Community, and profile navigation. At 1440 CSS pixels or less, navigation uses a second row to prevent overlap.
+- **Compact profile:** rectangular dark surface, 24 px avatar, account name, status color, and arrow inside a 30 px box.
+- **Pinned controls:** News, Notifications, and Friends & Chat stay visible. Existing hide-button settings still apply.
+- **Left-opening dropdown:** at 1680 CSS pixels or less, remaining utility controls open down and to the left of the arrow. On wider windows they remain inline.
+- **Reload shortcut:** uses Steam's `Browser.RestartJSContext()` to reload its interface, without intentionally exiting Steam or restarting Windows.
+- **Storage shortcut:** opens Steam's native Settings → Storage page.
+- **Manage Downloads icon:** restores the idle download icon without duplicating it during active downloads.
+- **Original layout:** General → Userpanel → Userpanel position → **Sidebar (original)** restores the upstream profile position. **Top right** is this fork's default.
 
-|  Library home  |  Library gamepage  |
-|  :---:  |  :---:  |
-|  ![Preview](https://raw.githubusercontent.com/SpaceTheme/Steam/main/.github/assets/concepts/conceptLibHome.webp)  |  ![Preview](https://raw.githubusercontent.com/SpaceTheme/Steam/main/.github/assets/concepts/conceptLibGamepage.webp)  |
-|  **Store**  |  **Store gamepage**  |
-|  ![Preview](https://raw.githubusercontent.com/SpaceTheme/Steam/main/.github/assets/concepts/conceptStorePage.webp)  |  ![Preview](https://raw.githubusercontent.com/SpaceTheme/Steam/main/.github/assets/concepts/conceptStoreGamepage.webp)  |
-</details>
+![Left-opening dropdown and profile controls](.github/screenshots/header-dropdown.png)
+
+The dropdown supports clicking, Enter/Space on its button, Escape, outside-click dismissal, and keyboard focus dismissal. Original Steam elements are moved, not cloned, preserving their handlers. A focus fix prevents non-focusable icons from losing their click as the menu opens.
 
 ## Installation
-1. Download [Millennium](https://docs.steambrew.app/users/getting-started/installation) and follow the provided instructions to install the patcher.
-1. Open the [Theme Page](https://steambrew.app/theme?id=zQndv1rI0FXLh3QTRgOL) and click the Copy Theme ID button.
-1. Navigate to the Theme tab in the Millennium settings and select "Install Theme" and paste the Theme ID.
 
-**Voilà! Enjoy the new look of your Steam!**
+Requires an existing [Millennium](https://steambrew.app/) installation.
 
-## Info
-- Some things only work properly when steam is maximized on a 1920x1080p (or higher) monitor.
-  - Smaller monitors may be properly supported later
+1. Exit Steam normally. Back up the current theme folder and Millennium's `config/config.json` outside Steam.
+2. Download the [latest release](https://github.com/w-rakeeb/SpaceTheme-Steam/releases/latest) and extract `SpaceTheme-Top-Right.zip`.
+3. Copy its `Steam` folder into `<Steam>/millennium/themes/`. Replace an existing `Steam` theme only after backing it up.
+4. Start Steam, open **Steam → Millennium → Themes**, and select **SpaceTheme for Steam**. Allow theme scripts/styles.
+5. Set **Userpanel position → Top right** in theme settings if necessary.
 
-## Fully supported plugins
-- [HLTB for Steam](https://steambrew.app/plugin?id=f685622bace6)
-- [Size on Disk](https://steambrew.app/plugin?id=e73371b61eef)
+Alternatively, download this repository's source ZIP and copy the folder containing `skin.json` as `<Steam>/millennium/themes/Steam`.
+
+The folder and display names are retained so existing SpaceTheme preferences can carry over. This replaces the installed SpaceTheme copy; keep its backup to return to upstream. GitHub update metadata points to this fork.
+
+## Plugins stay separate
+
+**Size on Disk is not included, installed, enabled, or custom-styled by this fork.** Install plugins independently through Millennium. Steam's Storage page remains accessible through the dropdown shortcut.
+
+![Native Storage settings opened through the shortcut](.github/screenshots/storage-settings.png)
+
+## Scope and verification
+
+The additions are CSS and a small JavaScript header module. They add no installer, native DLL, service, scheduled task, startup entry, shell command, credential store, or game-file operation. Local activation-cleanup work is not included in this repository.
+
+Automated checks cover layout widths, centered navigation, pinned controls, left-opening position, the lost-click regression, dismissal/keyboard behavior, and shortcut dispatch. The running Windows Steam client was also used to check the visible header, profile fit, dropdown, native Storage destination, and interface reload. Screenshots above are actual captures.
+
+This cannot guarantee against Steam or Millennium bugs. Internal classes/APIs may change. Linux, Big Picture/VR actions, mixed-DPI/multi-monitor behavior, and every upstream theme option have not been exhaustively tested. See [validation](docs/VALIDATION.md) and the [change map](docs/CHANGES.md).
+
+## Rollback
+
+Exit Steam and restore your backed-up theme folder and configuration. For only the profile position, select **Sidebar (original)** and reload the theme. To use default Steam, disable the theme in Millennium.
+
+## Credits and license
+
+Original theme/assets: **SpaceTheme / SpaceEnergy**, under the [MIT license](LICENSE). Based on upstream commit [`91a3804`](https://github.com/SpaceTheme/Steam/commit/91a380421757233340e17040fae2b866c43c2f20). The original [README](UPSTREAM-README.md) is preserved.
+
+Customizations, testing, and Windows screenshots: **w-rakeeb**. Report fork-specific issues [here](https://github.com/w-rakeeb/SpaceTheme-Steam/issues).

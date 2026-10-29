@@ -3,8 +3,8 @@
     "description": "Theme with a dark aesthetic and modular-inspired look, offering clarity, flexibility, and an enhanced user experience.",
     "author": "SpaceEnergy",
     "github": {
-        "owner": "SpaceTheme",
-        "repo_name": "Steam"
+        "owner": "w-rakeeb",
+        "repo_name": "SpaceTheme-Steam"
     },
     "funding": { "kofi": "spacetheme" },
     "discord_support": { "inviteCodeExcludingLink": "7Zv8Xz3Vzn" },
@@ -126,6 +126,18 @@
             }
         },
 
+        "Userpanel position": {
+            "description": "Place the profile and its controls together in the top-right titlebar, or restore the sidebar layout.",
+            "default": "Top right",
+            "tab": "General",
+            "section": "Userpanel",
+            "values": {
+                "Top right": {
+                    "TargetCss": { "affects": ["^Steam$"], "src": "options/general/userpanel/topRight.css" }
+                },
+                "Sidebar (original)": {}
+            }
+        },
         "Wallet balance": {
             "description": "Hide wallet balance",
             "default": "no",

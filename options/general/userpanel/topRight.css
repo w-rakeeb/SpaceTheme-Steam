@@ -1,0 +1,221 @@
+/* Keep the existing Steam controls and event handlers; only change their layout. */
+:root {
+    --st-header-top-right: 1;
+    --st-userpanel-space: 0px;
+    --st-userpanel-alert-space: 0px;
+    --st-userpanel-gap: 0px;
+}
+
+body ._3cykd-VfN_xBxf3Qxriccm {
+    position: absolute;
+    top: 7px !important;
+    right: 140px !important;
+    bottom: auto !important;
+    left: auto !important;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    gap: 6px;
+    width: max-content !important;
+    max-width: calc(100vw - 290px);
+    height: 32px;
+    margin: 0 !important;
+    padding: 0;
+    border: 0;
+    border-radius: 0;
+    background: transparent;
+    box-shadow: none;
+    visibility: visible !important;
+    opacity: 1 !important;
+    z-index: 100;
+    -webkit-app-region: no-drag;
+}
+
+body ._3cykd-VfN_xBxf3Qxriccm > div,
+body ._3cykd-VfN_xBxf3Qxriccm ._2Lu3d-5qLmW4i19ysTt2jT:not(._3mGEzzp18imtSzGPkduedi) {
+    width: auto;
+    min-width: 0;
+}
+
+body ._3cykd-VfN_xBxf3Qxriccm .userpanel-buttoncontainer {
+    order: -1;
+    flex: 0 0 auto;
+    gap: 4px;
+    width: auto;
+    padding-right: 8px;
+    border-right: 1px solid rgba(103, 112, 123, .25);
+}
+
+body ._3cykd-VfN_xBxf3Qxriccm .st-header-pinned {
+    order: -4;
+    position: static;
+    display: flex;
+}
+
+body ._3cykd-VfN_xBxf3Qxriccm .userpanel-buttoncontainer > div,
+body ._3cykd-VfN_xBxf3Qxriccm .userpanel-buttoncontainer ._2Szzh5sKyGgnLUR870zbDE,
+body ._3cykd-VfN_xBxf3Qxriccm .userpanel-buttoncontainer ._2Lu3d-5qLmW4i19ysTt2jT > div {
+    width: 30px;
+    height: 28px;
+    flex-shrink: 0;
+}
+
+/* Flat header controls follow SpaceTheme's pre-sidebar titlebar styling. */
+body ._3cykd-VfN_xBxf3Qxriccm .userpanel-buttoncontainer ._2Szzh5sKyGgnLUR870zbDE,
+body ._3cykd-VfN_xBxf3Qxriccm .userpanel-buttoncontainer ._1TdaAqMFadi0UTqilrkelR {
+    border-radius: 4px !important;
+    background-color: rgba(103, 112, 123, .16) !important;
+}
+
+body ._3cykd-VfN_xBxf3Qxriccm .userpanel-buttoncontainer ._2Szzh5sKyGgnLUR870zbDE:hover,
+body ._3cykd-VfN_xBxf3Qxriccm .userpanel-buttoncontainer ._1TdaAqMFadi0UTqilrkelR:hover {
+    background-color: rgba(103, 112, 123, .32) !important;
+}
+
+body ._3cykd-VfN_xBxf3Qxriccm ._2Lu3d-5qLmW4i19ysTt2jT:not(._3mGEzzp18imtSzGPkduedi) ._3yD46y5pd3zOGR7CzKs0mC {
+    box-sizing: border-box;
+    height: 30px;
+    max-width: none;
+    flex-shrink: 0;
+    align-items: center;
+    padding: 2px 6px !important;
+    font-size: 12px;
+    font-weight: 500;
+    white-space: nowrap;
+    overflow: visible;
+    border: 1px solid rgb(var(--st-color-5));
+    border-radius: 2px !important;
+    background-color: rgba(103, 112, 123, .2) !important;
+}
+
+body ._3cykd-VfN_xBxf3Qxriccm ._2Lu3d-5qLmW4i19ysTt2jT:not(._3mGEzzp18imtSzGPkduedi) ._3yD46y5pd3zOGR7CzKs0mC:hover {
+    background-color: rgba(103, 112, 123, .28) !important;
+}
+
+body ._3cykd-VfN_xBxf3Qxriccm .avatarHolder,
+body ._3cykd-VfN_xBxf3Qxriccm .avatarHolder .avatar,
+body ._3cykd-VfN_xBxf3Qxriccm .avatarHolder img {
+    box-sizing: border-box;
+    flex-shrink: 0;
+    width: 24px;
+    height: 24px;
+    transform: none;
+    border-radius: 1px !important;
+}
+
+body ._3cykd-VfN_xBxf3Qxriccm ._3yD46y5pd3zOGR7CzKs0mC ._3x51wbt5DYyWC8JKwQ51ir {
+    display: block;
+    width: 8px;
+    height: 8px;
+    margin-left: 6px;
+}
+
+body ._3cykd-VfN_xBxf3Qxriccm ._3yD46y5pd3zOGR7CzKs0mC ._2jphjrSifC6orDT4g_7Wd {
+    left: 36px;
+    bottom: 1px;
+    font-size: 9px;
+}
+
+/* Account warnings remain readable below the toolbar rather than stretching it. */
+body ._3cykd-VfN_xBxf3Qxriccm ._3E5iVG630BkOHTaJJaMEMw {
+    position: absolute;
+    top: 40px;
+    right: 0;
+    width: max-content;
+    max-width: min(400px, calc(100vw - 32px));
+    white-space: normal;
+}
+
+body ._3Z3ohQ8-1NKnCZkbS6fvy {
+    left: 50%;
+    transform: translate(-50%, -50%);
+}
+
+body ._3cykd-VfN_xBxf3Qxriccm > .st-header-reload,
+body ._3cykd-VfN_xBxf3Qxriccm > .st-header-more,
+body ._3cykd-VfN_xBxf3Qxriccm .st-header-storage {
+    box-sizing: border-box;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    flex: 0 0 30px;
+    width: 30px;
+    height: 28px;
+    padding: 6px;
+    border: 0;
+    border-radius: 4px;
+    color: #8b929a;
+    background: rgba(103, 112, 123, .16);
+    cursor: pointer;
+    -webkit-app-region: no-drag;
+}
+body ._3cykd-VfN_xBxf3Qxriccm > .st-header-reload { order: -3; }
+body ._3cykd-VfN_xBxf3Qxriccm > .st-header-more { order: -2; display: none; }
+body ._3cykd-VfN_xBxf3Qxriccm > :is(.st-header-reload, .st-header-more):hover,
+body ._3cykd-VfN_xBxf3Qxriccm .st-header-storage:hover {
+    color: #fff;
+    background: rgba(103, 112, 123, .32);
+}
+body ._3cykd-VfN_xBxf3Qxriccm > :is(.st-header-reload, .st-header-more):focus-visible,
+body ._3cykd-VfN_xBxf3Qxriccm .st-header-storage:focus-visible {
+    outline: 2px solid rgb(var(--st-accent-1));
+    outline-offset: 2px;
+}
+body ._3cykd-VfN_xBxf3Qxriccm > .st-header-reload:disabled,
+body ._3cykd-VfN_xBxf3Qxriccm .st-header-storage:disabled { opacity: .4; cursor: default; }
+body ._3cykd-VfN_xBxf3Qxriccm > :is(.st-header-reload, .st-header-more)::before,
+body ._3cykd-VfN_xBxf3Qxriccm .st-header-storage::before { content: none; }
+body ._3cykd-VfN_xBxf3Qxriccm > :is(.st-header-reload, .st-header-more) svg,
+body ._3cykd-VfN_xBxf3Qxriccm .st-header-storage svg {
+    width: 18px;
+    height: 18px;
+    fill: none;
+    stroke: currentColor;
+    stroke-width: 1.8;
+    stroke-linecap: round;
+    stroke-linejoin: round;
+}
+
+/* Reserve the centered navigation's space by moving utilities below the header. */
+@media (max-width: 1680px) {
+    body ._3cykd-VfN_xBxf3Qxriccm > .st-header-more { display: inline-flex; }
+    body ._3cykd-VfN_xBxf3Qxriccm .userpanel-buttoncontainer:not(.st-header-pinned) {
+        position: absolute;
+        top: 38px;
+        right: auto;
+        left: var(--st-header-menu-left, 0px);
+        display: none;
+        grid-template-columns: repeat(3, 30px);
+        gap: 6px;
+        width: max-content;
+        padding: 8px;
+        border: 1px solid rgb(var(--st-color-5));
+        border-radius: var(--st-border-radius);
+        background: rgb(var(--st-color-2));
+        box-shadow: 0 6px 20px rgba(0, 0, 0, .4);
+        -webkit-app-region: no-drag;
+    }
+    body ._3cykd-VfN_xBxf3Qxriccm.st-header-menu-open .userpanel-buttoncontainer:not(.st-header-pinned) { display: grid; }
+    body ._3cykd-VfN_xBxf3Qxriccm > .st-header-more[aria-expanded="true"] svg { transform: rotate(180deg); }
+}
+
+/* Very narrow windows keep centered navigation on its own row. */
+@media (max-width: 1440px) {
+    body ._39oUCO1OuizVPwcnnv88no {
+        height: 80px !important;
+        align-items: flex-start;
+    }
+    body ._39oUCO1OuizVPwcnnv88no ._1Ky59qmywxOUtNcI1cgmkX {
+        height: 46px;
+    }
+    body ._3Z7VQ1IMk4E3HsHvrkLNgo ._3Z3ohQ8-1NKnCZkbS6fvy {
+        top: 46px !important;
+        left: 0 !important;
+        width: 100% !important;
+        height: 28px !important;
+        transform: none !important;
+    }
+    body ._3Z3ohQ8-1NKnCZkbS6fvy ._2D64jIEK7wpUR_NlObDW76 {
+        justify-content: center;
+    }
+}
