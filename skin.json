@@ -330,7 +330,7 @@
                 "no": {},
                 "yes": {
                     "TargetCss": { "affects": ["^SP Overlay:"], "src": "src/css/overlay.custom.css" },
-                    "TargetJs": { "affects": [".*"], "src": "src/js/overlay.js" }
+                    "TargetJs": { "affects": ["^SP Overlay:", "^desktopoverlay", "_uid[1-9][0-9]*$"], "src": "src/js/overlay.js" }
                 }
             }
         },
@@ -395,7 +395,7 @@
             "values": {
                 "no": {},
                 "yes": {
-                    "TargetCss": { "affects": ["https://.*\\.steampowered\\.com(/.*)?"], "src": "options/store/gamepage/broadcast.css" }
+                    "TargetCss": { "affects": ["https://.*\\.steampowered\\.com(/.*)?"], "src": "options/store/gamepage/infoSidebarLeft.css" }
                 }
             }
         },
@@ -790,16 +790,15 @@
     "Patches": [
         {
             "MatchRegexString": ".*",
-            "TargetCss": "src/css/regular.css",
-            "TargetJs": "src/js/regular.js"
+            "TargetCss": "src/css/regular.css"
         },
         {
             "MatchRegexString": ".*",
             "TargetCss": "src/icons/fluent/fluent.css"
         },
         {
-            "MatchRegexString": ".*",
-            "TargetJs": "src/js/utils.js"
+            "MatchRegexString": "^Steam$|ModalDialogPopup|friendsui-container|^notificationtoasts_|Rp8QOGJ2DypeDniMnRBhr|Menu$|Supernav$",
+            "TargetJs": "src/js/regular.js"
         },
         {
             "MatchRegexString": "^Steam$",
@@ -807,43 +806,40 @@
             "TargetJs": "src/js/libraryroot.custom.js"
         },
         {
-            "MatchRegexString": "https://.*\\.steampowered\\.com(/.*)?",
+            "MatchRegexString": "^https://store\\.steampowered\\.com/search(?:[/?#].*)?$",
             "TargetJs": "src/js/webkit.js"
         },
         {
             "MatchRegexString": "https://steamcommunity\\.com(/.*)?",
-            "TargetCss": "src/css/custom/custom.css",
+            "TargetCss": "src/css/custom/custom.css"
+        },
+        {
+            "MatchRegexString": "^https://steamcommunity\\.com/(?:id|profiles)/[^/]+/friendsthatplay(?:[/?#].*)?$",
             "TargetJs": "src/js/webkit.js"
         },
         {
             "MatchRegexString": ".ModalDialogPopup",
-            "TargetCss": "src/css/libraryroot.custom.css",
-            "TargetJs": "src/css/libraryroot.custom.js"
+            "TargetCss": "src/css/libraryroot.custom.css"
         },
         {
             "MatchRegexString": ".friendsui-container",
-            "TargetCss": "src/css/friends.custom.css",
-            "TargetJs": "src/css/friends.custom.js"
+            "TargetCss": "src/css/friends.custom.css"
         },
         {
             "MatchRegexString": "Supernav$",
-            "TargetCss": "src/css/menu.custom.css",
-            "TargetJs": "src/js/menu.custom.js"
+            "TargetCss": "src/css/menu.custom.css"
         },
         {
             "MatchRegexString": "Menu$",
-            "TargetCss": "src/css/menu.custom.css",
-            "TargetJs": "src/js/menu.custom.js"
+            "TargetCss": "src/css/menu.custom.css"
         },
         {
             "MatchRegexString": "^Steam$",
-            "TargetCss": "src/css/menu.custom.css",
-            "TargetJs": "src/js/menu.custom.js"
+            "TargetCss": "src/css/menu.custom.css"
         },
         {
 			"MatchRegexString": "^notificationtoasts_",
-			"TargetCss": "src/css/notifications.custom.css",
-			"TargetJs": "src/css/notifications.custom.js"
+			"TargetCss": "src/css/notifications.custom.css"
 		},
         {
             "MatchRegexString": ".Rp8QOGJ2DypeDniMnRBhr",
@@ -851,7 +847,7 @@
         },
         {
             "MatchRegexString": "[href=\"/css/gamerecording.css\"]",
-            "TargetCss": "src/css/steam/screenshotManager.css"
+            "TargetCss": "src/css/steam/modalDialogPopup/screenshotManager.css"
         }
     ]
 }

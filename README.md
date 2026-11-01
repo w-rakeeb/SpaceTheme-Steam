@@ -21,6 +21,22 @@ The dropdown supports clicking, Enter/Space on its button, Escape, outside-click
 
 ## Installation
 
+### Compatibility update — 1.0.1
+
+Updated Store navigation, event banners, personal calendar, discovery queue,
+carousel indicators and playbar download information using current upstream
+styles. Community home now has matching panels, search fields, tabs and loading
+feedback. Missing asset/patch references and the Store-sidebar option target were
+repaired. Native-only scripts no longer load on ordinary web pages; search and
+friends-that-play helpers stay limited to the pages that need them. Steam's
+security policy is unchanged.
+
+The element-wait helper no longer leaves an observer behind for existing
+elements, and recycled Library rows refresh their game labels. See the
+[compatibility notes](docs/COMPATIBILITY-2026-11-01.md) for checks and limits.
+
+![Current themed Store navigation and event banner](.github/screenshots/store.png)
+
 Requires an existing [Millennium](https://steambrew.app/) installation.
 
 1. Exit Steam normally. Back up the current theme folder and Millennium's `config/config.json` outside Steam.

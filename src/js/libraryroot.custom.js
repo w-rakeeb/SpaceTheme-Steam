@@ -45,7 +45,8 @@ async function syncWidthIfTargetHidden() {
         const width = sourceEl.style.width;
         const scrollbarWidth = '16px';
         if (width) {
-            targetEl.style.flex = `0 0 calc(${width} + ${scrollbarWidth})`;
+            const flex = `0 0 calc(${width} + ${scrollbarWidth})`;
+            if (targetEl.style.flex !== flex) targetEl.style.flex = flex;
             // Used by the "Sidebar only on hover" option for the expanded width.
             // Only set on changes, every style change triggers the observer below again.
             if (targetEl.style.getPropertyValue('--st-sidebar-width') !== width) {
@@ -190,9 +191,9 @@ async function setupGamesHovers() {
 
             const separator = itemText.querySelector(separatorSelector);
 
-            if (!itemText.dataset.stHoverText) {
-                let text = itemText.innerText;
-                if (separator) text += ` ${separator.textContent}`;
+            let text = itemText.innerText;
+            if (separator) text += ` ${separator.textContent}`;
+            if (itemText.dataset.stHoverText !== text) {
                 itemText.dataset.stHoverText = text;
             }
 
@@ -650,7 +651,7 @@ const saveSidebarWidth = (body, width) => {
     };
 
     const handleCleanup = () => {
-        resizer.removeEventListener('mousedown', clickCallback);
+        resizer?.removeEventListener('mousedown', clickCallback);
         document.removeEventListener("mousemove", moveCallback);
         document.removeEventListener("mouseup", releaseCallback);
     };

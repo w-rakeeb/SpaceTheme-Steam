@@ -1,5 +1,9 @@
 # Validation
 
+The [1 November 2026 compatibility check](COMPATIBILITY-2026-11-01.md) adds
+complete local-asset validation, native/web script-scope checks, Store/Community
+layout checks, observer lifecycle checks and recycled-row regression coverage.
+
 ## Automated checks
 
 `tests/header-layout.cjs` creates a representative Steam header DOM and applies
@@ -28,6 +32,9 @@ Node.js and Playwright are development/test tools, not theme runtime dependencie
 npm install --no-save --package-lock=false playwright
 npx playwright install chromium
 node tests/header-layout.cjs
+node tests/theme-integrity.cjs
+node tests/utils.cjs
+node tests/webkit-layout.cjs
 ```
 
 An installed Edge browser may be selected through `PLAYWRIGHT_CHANNEL=msedge`.

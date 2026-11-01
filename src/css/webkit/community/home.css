@@ -1,0 +1,108 @@
+/* Community home uses stable semantic classes, rather than Store build hashes. */
+.community_home_header_bg {
+    background: none;
+}
+
+.community_home_title {
+    color: #fff;
+    font-size: 24px;
+    font-weight: 600;
+}
+
+.community_home_subtitle,
+.community_home_search_title,
+.community_home_app_shortcuts_list_header {
+    color: #969696;
+}
+
+.community_home_shortcut_content,
+.community_home_search_ctn {
+    box-sizing: border-box;
+    border: 1px solid rgb(var(--st-color-5));
+    border-radius: var(--st-border-radius);
+    background: rgb(var(--st-color-2));
+}
+
+.community_home_search_box,
+.community_home_search_apps,
+.community_home_search_players {
+    box-sizing: border-box;
+    border: 1px solid rgb(var(--st-color-5));
+    border-radius: 6px;
+    background: rgb(var(--st-color-1));
+    box-shadow: none;
+}
+
+.community_home_search_box:focus-within {
+    border-color: rgb(var(--st-accent-1));
+}
+
+.community_home_search_content input[type="text"] {
+    box-sizing: border-box;
+    border: 1px solid rgb(var(--st-color-5));
+    border-radius: 4px;
+    color: #dcdedf;
+    background: rgb(var(--st-color-1));
+    font-style: normal;
+    box-shadow: none;
+}
+
+.community_home_search_box input::placeholder {
+    color: #969696;
+}
+
+.community_home_search_divider {
+    border-color: rgb(var(--st-color-5));
+    background: rgb(var(--st-color-5));
+}
+
+.community_home_tabs .apphub_sectionTab {
+    border-radius: 4px 4px 0 0;
+    color: #b8b6b4;
+    background: transparent;
+}
+
+.community_home_tabs .apphub_sectionTab:hover {
+    color: #fff;
+    background: rgb(var(--st-color-3));
+}
+
+.community_home_tabs .apphub_sectionTab.active {
+    border-bottom-color: rgb(var(--st-accent-1));
+    color: rgb(var(--st-accent-2));
+}
+
+.community_home_sort_buttons a {
+    border: 0;
+    border-radius: 6px;
+    color: #b8b6b4;
+    background: rgb(var(--st-color-3));
+    box-shadow: none;
+}
+
+.community_home_sort_buttons .btn_darkblue_white_innerfade {
+    color: rgb(var(--st-accent-2));
+    background: rgba(var(--st-accent-1), .18);
+}
+
+.community_home_sort_buttons a > span {
+    border: 0;
+    color: inherit;
+    background: transparent;
+    box-shadow: none;
+}
+
+.apphub_ProgressBarBG {
+    overflow: hidden;
+    height: 6px;
+    border: 0;
+    border-radius: var(--st-border-radius);
+    background: rgb(var(--st-color-5));
+}
+
+.apphub_ProgressBar {
+    height: 6px;
+    border: 0;
+    border-radius: var(--st-border-radius);
+    background: rgb(var(--st-accent-1));
+}
