@@ -9,7 +9,7 @@
 body ._3cykd-VfN_xBxf3Qxriccm {
     position: absolute;
     top: 7px !important;
-    right: 140px !important;
+    right: 152px !important;
     bottom: auto !important;
     left: auto !important;
     display: flex;
@@ -18,7 +18,7 @@ body ._3cykd-VfN_xBxf3Qxriccm {
     gap: 6px;
     width: max-content !important;
     max-width: calc(100vw - 290px);
-    height: 32px;
+    height: 36px;
     margin: 0 !important;
     padding: 0;
     border: 0;
@@ -74,13 +74,14 @@ body ._3cykd-VfN_xBxf3Qxriccm .userpanel-buttoncontainer ._1TdaAqMFadi0UTqilrkel
 
 body ._3cykd-VfN_xBxf3Qxriccm ._2Lu3d-5qLmW4i19ysTt2jT:not(._3mGEzzp18imtSzGPkduedi) ._3yD46y5pd3zOGR7CzKs0mC {
     box-sizing: border-box;
-    height: 30px;
+    height: 36px;
     max-width: none;
     flex-shrink: 0;
     align-items: center;
-    padding: 2px 6px !important;
-    font-size: 12px;
-    font-weight: 500;
+    padding: 3px 8px !important;
+    font-size: 14px;
+    line-height: 16px;
+    font-weight: 600;
     white-space: nowrap;
     overflow: visible;
     border: 1px solid rgb(var(--st-color-5));
@@ -97,8 +98,8 @@ body ._3cykd-VfN_xBxf3Qxriccm .avatarHolder .avatar,
 body ._3cykd-VfN_xBxf3Qxriccm .avatarHolder img {
     box-sizing: border-box;
     flex-shrink: 0;
-    width: 24px;
-    height: 24px;
+    width: 26px;
+    height: 26px;
     transform: none;
     border-radius: 1px !important;
 }
@@ -111,9 +112,22 @@ body ._3cykd-VfN_xBxf3Qxriccm ._3yD46y5pd3zOGR7CzKs0mC ._3x51wbt5DYyWC8JKwQ51ir 
 }
 
 body ._3cykd-VfN_xBxf3Qxriccm ._3yD46y5pd3zOGR7CzKs0mC ._2jphjrSifC6orDT4g_7Wd {
-    left: 36px;
-    bottom: 1px;
-    font-size: 9px;
+    left: 40px;
+    bottom: 3px;
+    font-size: 11px;
+    line-height: 12px;
+    font-weight: 500;
+    font-variant-numeric: tabular-nums;
+    color: #b8bcbf;
+}
+
+body ._3cykd-VfN_xBxf3Qxriccm ._3yD46y5pd3zOGR7CzKs0mC:has(._2jphjrSifC6orDT4g_7Wd) {
+    align-items: flex-start;
+}
+
+body ._3cykd-VfN_xBxf3Qxriccm ._3yD46y5pd3zOGR7CzKs0mC .avatarHolder,
+body ._3cykd-VfN_xBxf3Qxriccm ._3yD46y5pd3zOGR7CzKs0mC ._3x51wbt5DYyWC8JKwQ51ir {
+    align-self: center;
 }
 
 /* Account warnings remain readable below the toolbar rather than stretching it. */
@@ -150,7 +164,7 @@ body ._3cykd-VfN_xBxf3Qxriccm .st-header-storage {
     -webkit-app-region: no-drag;
 }
 body ._3cykd-VfN_xBxf3Qxriccm > .st-header-reload { order: -3; }
-body ._3cykd-VfN_xBxf3Qxriccm > .st-header-more { order: -2; display: none; }
+body ._3cykd-VfN_xBxf3Qxriccm > .st-header-more { order: -2; }
 body ._3cykd-VfN_xBxf3Qxriccm > :is(.st-header-reload, .st-header-more):hover,
 body ._3cykd-VfN_xBxf3Qxriccm .st-header-storage:hover {
     color: #fff;
@@ -176,8 +190,7 @@ body ._3cykd-VfN_xBxf3Qxriccm .st-header-storage svg {
     stroke-linejoin: round;
 }
 
-/* Reserve the centered navigation's space by moving utilities below the header. */
-@media (max-width: 1680px) {
+/* Keep the same dropdown on windowed, maximized and fullscreen layouts. */
     body ._3cykd-VfN_xBxf3Qxriccm > .st-header-more { display: inline-flex; }
     body ._3cykd-VfN_xBxf3Qxriccm .userpanel-buttoncontainer:not(.st-header-pinned) {
         position: absolute;
@@ -197,10 +210,9 @@ body ._3cykd-VfN_xBxf3Qxriccm .st-header-storage svg {
     }
     body ._3cykd-VfN_xBxf3Qxriccm.st-header-menu-open .userpanel-buttoncontainer:not(.st-header-pinned) { display: grid; }
     body ._3cykd-VfN_xBxf3Qxriccm > .st-header-more[aria-expanded="true"] svg { transform: rotate(180deg); }
-}
 
 /* Very narrow windows keep centered navigation on its own row. */
-@media (max-width: 1440px) {
+@media (max-width: 1560px) {
     body ._39oUCO1OuizVPwcnnv88no {
         height: 80px !important;
         align-items: flex-start;

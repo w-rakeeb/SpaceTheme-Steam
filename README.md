@@ -6,10 +6,10 @@ A focused fork of [SpaceTheme/Steam](https://github.com/SpaceTheme/Steam), maint
 
 ## Features
 
-- **Centered navigation:** Store, Library, Community, and profile navigation. At 1440 CSS pixels or less, navigation uses a second row to prevent overlap.
-- **Compact profile:** rectangular dark surface, 24 px avatar, account name, status color, and arrow inside a 30 px box.
+- **Centered navigation:** Store, Library, Community, and profile navigation. At 1560 CSS pixels or less, navigation uses a second row to prevent overlap.
+- **Readable profile:** rectangular dark surface, 26 px avatar, 14 px account name and a separate 11 px wallet line inside a 36 px box. The official hide-wallet option still applies.
 - **Pinned controls:** News, Notifications, and Friends & Chat stay visible. Existing hide-button settings still apply.
-- **Left-opening dropdown:** at 1680 CSS pixels or less, remaining utility controls open down and to the left of the arrow. On wider windows they remain inline.
+- **Left-opening dropdown:** remaining utility controls open down and to the left of the arrow at every width, including maximized Steam.
 - **Reload shortcut:** uses Steam's `Browser.RestartJSContext()` to reload its interface, without intentionally exiting Steam or restarting Windows.
 - **Storage shortcut:** opens Steam's native Settings → Storage page.
 - **Manage Downloads icon:** restores the idle download icon without duplicating it during active downloads.
@@ -20,6 +20,28 @@ A focused fork of [SpaceTheme/Steam](https://github.com/SpaceTheme/Steam), maint
 The dropdown supports clicking, Enter/Space on its button, Escape, outside-click dismissal, and keyboard focus dismissal. Original Steam elements are moved, not cloned, preserving their handlers. A focus fix prevents non-focusable icons from losing their click as the menu opens.
 
 ## Installation
+
+### Official updates and compatibility — 1.1.0
+
+This edition now incorporates official SpaceTheme through `ddfbbbe`, including the
+current collection sidebar, resizing, settings styling and wallet fix. Our header,
+shortcuts, installer and compatibility fixes remain alongside it. Settings use
+an unscaled, scrollable editor and CSS layout instead of moving React-owned nodes.
+Store columns and the footer adapt to the embedded browser width.
+
+An [upstream synchronization workflow](.github/workflows/upstream.yml) checks the
+official repository every six hours and can also be run manually. It merges
+updates with this edition, runs the browser/asset/script/installer checks, and
+publishes only successful merges. Conflicts or failed checks stop publication;
+they require maintenance rather than overwriting customizations. Scheduled checks
+can be delayed by GitHub and inactive repositories can have schedules disabled.
+
+Millennium continues to receive this fork through its normal theme updater, so
+keep theme update checks enabled. It does not fetch raw official files directly
+over our installation. The CMD installer remains available for manual updating.
+See [update details and verification](docs/UPDATES.md).
+
+![Sharp, scrollable SpaceTheme settings](.github/screenshots/settings.png)
 
 ### Compatibility update — 1.0.1
 
@@ -98,6 +120,6 @@ theme, restoring the configuration and moving the new theme away is sufficient.
 
 ## Credits and license
 
-Original theme/assets: **SpaceTheme / SpaceEnergy**, under the [MIT license](LICENSE). Based on upstream commit [`91a3804`](https://github.com/SpaceTheme/Steam/commit/91a380421757233340e17040fae2b866c43c2f20). The original [README](UPSTREAM-README.md) is preserved.
+Original theme/assets: **SpaceTheme / SpaceEnergy**, under the [MIT license](LICENSE). Official history is merged through [`ddfbbbe`](https://github.com/SpaceTheme/Steam/commit/ddfbbbe). The official [README](UPSTREAM-README.md) is preserved.
 
 Customizations, testing, and Windows screenshots: **w-rakeeb**. Report fork-specific issues [here](https://github.com/w-rakeeb/SpaceTheme-Steam/issues).

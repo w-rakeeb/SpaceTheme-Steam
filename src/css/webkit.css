@@ -40,6 +40,7 @@
 /** Plugins */
 /*^ Extendium */
 @import url("./plugins/extendium/plugins.css");
+@import url("./custom/responsivePages.css");
 
 
 

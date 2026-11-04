@@ -33,6 +33,13 @@ function checkManifest(value) {
 }
 scan(path.join(root,'src')); scan(path.join(root,'options')); checkManifest(manifest);
 assert.deepEqual(failures, [], 'every configured local asset must exist');
+assert.ok(!manifest.Patches.some(p => p.TargetJs === 'src/js/regular.js'), 'settings must not run React-node reparenting scripts');
+assert.equal(manifest.github.owner,'w-rakeeb');
+assert.equal(manifest.github.repo_name,'SpaceTheme-Steam');
+assert.ok(fs.existsSync(path.join(root,'Install.cmd')));
+assert.ok(fs.existsSync(path.join(root,'src/js/headerControls.js')));
+assert.ok(fs.readFileSync(path.join(root,'src/js/libraryroot.custom.js'),'utf8').includes('setupHeaderControls(parent, buttonContainer)'));
+assert.ok(!fs.readFileSync(path.join(root,'src/css/libraryroot.custom.css'),'utf8').includes('sizeOnDisk.css'));
 const remoteHelpers = url => manifest.Patches.filter(p => p.TargetJs && new RegExp(p.MatchRegexString).test(url)).map(p => p.TargetJs);
 assert.deepEqual(remoteHelpers('https://store.steampowered.com/'), []);
 assert.deepEqual(remoteHelpers('https://store.steampowered.com/app/123/'), []);

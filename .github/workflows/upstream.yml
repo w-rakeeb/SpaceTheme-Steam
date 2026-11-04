@@ -1,0 +1,80 @@
+name: Check theme and sync official SpaceTheme
+
+on:
+  push:
+    branches: [main]
+  workflow_dispatch:
+  schedule:
+    - cron: '23 */6 * * *'
+
+permissions:
+  contents: write
+
+concurrency:
+  group: spacetheme-main
+  cancel-in-progress: false
+
+jobs:
+  check-and-sync:
+    runs-on: windows-latest
+    env:
+      PLAYWRIGHT_CHANNEL: msedge
+      GH_TOKEN: ${{ github.token }}
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+          ref: main
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+      - name: Merge official changes without overwriting custom changes
+        id: upstream
+        if: github.event_name != 'push'
+        shell: pwsh
+        run: |
+          git config user.name 'github-actions[bot]'
+          git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
+          git fetch https://github.com/SpaceTheme/Steam.git main
+          if ($LASTEXITCODE) { throw 'Could not fetch official SpaceTheme.' }
+          git merge-base --is-ancestor FETCH_HEAD HEAD
+          if ($LASTEXITCODE -eq 0) { 'changed=false' >> $env:GITHUB_OUTPUT; exit 0 }
+          git merge FETCH_HEAD --no-ff -m 'Merge official SpaceTheme updates'
+          if ($LASTEXITCODE) { throw 'Upstream conflicts with this edition. Nothing was published; resolve the conflict before syncing.' }
+          'changed=true' >> $env:GITHUB_OUTPUT
+      - name: Set up browser checks
+        shell: pwsh
+        run: |
+          npm install --prefix "$env:RUNNER_TEMP/browser-checks" playwright@1.56.1
+          if ($LASTEXITCODE) { throw 'Browser test dependency installation failed.' }
+          "NODE_PATH=$env:RUNNER_TEMP/browser-checks/node_modules" >> $env:GITHUB_ENV
+      - name: Verify theme and custom additions
+        shell: pwsh
+        run: |
+          foreach ($test in @('theme-integrity', 'header-layout', 'utils', 'webkit-layout', 'settings-layout')) {
+            node "tests/$test.cjs"
+            if ($LASTEXITCODE) { throw "Failed: $test" }
+          }
+          powershell.exe -NoProfile -ExecutionPolicy Bypass -File tests/installer.ps1
+          if ($LASTEXITCODE) { throw 'Installer checks failed.' }
+          Get-ChildItem src/js -Filter *.js -Recurse | ForEach-Object {
+            node --check $_.FullName
+            if ($LASTEXITCODE) { throw "JavaScript syntax check failed: $_" }
+          }
+          git diff --check
+          if ($LASTEXITCODE) { throw 'Patch whitespace check failed.' }
+      - name: Publish only verified upstream merges
+        if: steps.upstream.outputs.changed == 'true'
+        shell: pwsh
+        run: |
+          git push origin HEAD:main
+          if ($LASTEXITCODE) { throw 'Main changed during validation; nothing was force-pushed. Retry the workflow.' }
+          $commit = git rev-parse HEAD
+          $short = git rev-parse --short HEAD
+          $tag = 'upstream-' + (Get-Date -Format 'yyyyMMdd-HHmmss') + '-' + $short
+          git archive --format=zip --prefix=Steam/ --output=SpaceTheme-Top-Right.zip HEAD
+          if ($LASTEXITCODE) { throw 'Archive creation failed.' }
+          $hash = (Get-FileHash SpaceTheme-Top-Right.zip -Algorithm SHA256).Hash.ToLowerInvariant()
+          "$hash  SpaceTheme-Top-Right.zip" | Set-Content SpaceTheme-Top-Right.sha256 -Encoding ascii
+          gh release create $tag SpaceTheme-Top-Right.zip SpaceTheme-Top-Right.sha256 --target $commit --title "Official SpaceTheme sync - $commit" --notes 'Official SpaceTheme updates merged with the Top Right Edition. Asset, script scope, header, settings, page-layout and installer checks passed. Conflicting or failing updates are held for review. See README for installation and screenshots.'
+          if ($LASTEXITCODE) { throw 'Release upload failed; main is updated but the ZIP needs republishing.' }

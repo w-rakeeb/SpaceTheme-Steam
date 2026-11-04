@@ -1,0 +1,47 @@
+/* Use the actual embedded browser width, not a fixed 1200px page calculation. */
+html body {
+    --st-page-width: min(var(--st-store-max-width, 1200px), calc(100vw - 32px));
+}
+
+html body.v6 .leftcol {
+    box-sizing: border-box;
+    min-width: 0;
+    width: calc(var(--st-page-width) - 372px - 16px) !important;
+}
+
+html body.game_bg .game_description_column {
+    box-sizing: border-box;
+    min-width: 0;
+    width: calc(var(--st-page-width) - 372px - 16px);
+}
+
+html body.responsive_page #footer {
+    box-sizing: border-box;
+    width: var(--st-page-width) !important;
+    max-width: 100%;
+}
+
+@media (max-width: 900px) {
+    html body.v6 :is(.leftcol, .rightcol),
+    html body.game_bg :is(.game_description_column, .game_meta_data) {
+        float: none;
+        width: 100% !important;
+        max-width: 100%;
+        min-width: 0;
+        clear: both;
+    }
+
+    html body.search_page .searchbar {
+        flex-wrap: wrap;
+        gap: 8px;
+    }
+
+    html body.search_page .searchbar .searchbar_left {
+        max-width: 100%;
+        margin-left: 0;
+    }
+
+    html body.search_page .searchbar .searchbar_left #term:is(:hover, :focus) {
+        width: min(400px, calc(100vw - 100px));
+    }
+}

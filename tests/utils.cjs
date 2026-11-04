@@ -23,7 +23,7 @@ const assert = require('node:assert/strict');
         },source);
         assert.deepEqual(result,{immediate:true,immediateObservers:0,scoped:true});
         const main = fs.readFileSync(path.resolve(__dirname,'../src/js/libraryroot.custom.js'),'utf8');
-        const hover = main.match(/async function setupGamesHovers\(\)[\s\S]*?\n}\s*setupGamesHovers\(\);/)[0];
+        const hover = main.match(/function wrapSidebarCollections\([\s\S]*?\n}\s*setupGamesHovers\(\);/)[0];
         await page.evaluate(({source,hover}) => {
             const container=document.createElement('div'); container.className='_1ijTaXJJA5YWl_fW2IxcaT';
             const grid=document.createElement('div'); grid.className='ReactVirtualized__Grid__innerScrollContainer';

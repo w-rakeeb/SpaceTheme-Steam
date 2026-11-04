@@ -74,7 +74,6 @@ export function setupHeaderControls(parent, utilities) {
         // Steam's icon divs are not focusable; clicking one produces a null target.
         if (event.relatedTarget && !parent.contains(event.relatedTarget)) setOpen(false);
     });
-    const compact = matchMedia('(max-width: 1680px)');
-    compact.addEventListener('change', () => setOpen(false));
+    window.addEventListener('resize', () => setOpen(false));
     parent.append(reload, toggle);
 }

@@ -1,0 +1,81 @@
+/* Keep the native Millennium editor sharp and scrollable without scaling its text. */
+body .MillenniumDesktopSidebar {
+    --sidebar-width: min(760px, calc(100vw - 32px));
+    position: fixed;
+    inset: 16px 0;
+    width: var(--sidebar-width);
+    max-width: calc(100vw - 32px);
+    height: auto;
+    max-height: calc(100vh - 32px);
+    min-height: 0;
+    margin: 0 auto;
+    transform: none !important;
+    filter: none;
+    backdrop-filter: none;
+    font-size: 14px;
+    line-height: 1.45;
+}
+
+body .MillenniumDesktopSidebar .MillenniumDesktopSidebar_Content,
+body .MillenniumDesktopSidebar .MillenniumDesktopSidebar_EditorContent {
+    min-height: 0;
+    overflow-y: auto;
+    overscroll-behavior: contain;
+}
+
+body .MillenniumDesktopSidebar .MillenniumDesktopSidebar_Title,
+body .MillenniumDesktopSidebar .MillenniumDesktopSidebar_EditorHeader {
+    flex-shrink: 0;
+}
+
+body .MillenniumDesktopSidebar .MillenniumDesktopSidebar_EditorContent .DialogBody ._3TPGDj4kc0QGKvO8FJmGz8 {
+    font-size: 12px;
+    line-height: 1.5;
+}
+
+/* Layout controls with CSS; leave React-owned settings nodes in their original parents. */
+body .MillenniumDesktopSidebar[data-focused-item-type="THEME"] .MillenniumDesktopSidebar_EditorContent .eKmEXJCm_lgme24Fp_HWt {
+    display: grid !important;
+    grid-template-columns: minmax(0, 1fr) auto;
+    column-gap: 16px;
+    align-items: start;
+    margin: 0 12px 6px !important;
+    padding: 12px !important;
+    border-radius: var(--st-border-radius);
+    background-color: rgb(var(--st-color-3)) !important;
+}
+
+body .MillenniumDesktopSidebar[data-focused-item-type="THEME"] .MillenniumDesktopSidebar_EditorContent .eKmEXJCm_lgme24Fp_HWt > ._2tALpM7z8naXJ35Pp5fNAG {
+    min-width: 0;
+    align-self: start;
+}
+
+body .MillenniumDesktopSidebar[data-focused-item-type="THEME"] .MillenniumDesktopSidebar_EditorContent .eKmEXJCm_lgme24Fp_HWt ._2tALpM7z8naXJ35Pp5fNAG > :is(._2VcTlXFC64Jtg9gvtT6cmY, ._1W1to_azoBRG95oNAFpf9Q) {
+    margin: 0;
+    padding: 0;
+    background: none;
+}
+
+body .MillenniumDesktopSidebar[data-focused-item-type="THEME"] .MillenniumDesktopSidebar_EditorContent .eKmEXJCm_lgme24Fp_HWt ._2tALpM7z8naXJ35Pp5fNAG > ._1W1to_azoBRG95oNAFpf9Q {
+    margin-top: 6px;
+    line-height: 1.5;
+}
+
+body .MillenniumDesktopSidebar[data-focused-item-type="THEME"] .MillenniumDesktopSidebar_EditorContent .eKmEXJCm_lgme24Fp_HWt > :is(.PSZtxj2h3MlyYv-c9dgke, ._1aw7cA3mAZfWt8idAlVJWi) {
+    width: max-content !important;
+    justify-self: end;
+    max-width: min(260px, 40vw) !important;
+    margin: 0;
+    padding: 0;
+    background: none;
+}
+
+body .MillenniumDesktopSidebar[data-focused-item-type="THEME"] .MillenniumDesktopSidebar_EditorContent .eKmEXJCm_lgme24Fp_HWt:has(.SliderControlPanelGroup) {
+    grid-template-columns: minmax(0, 1fr);
+    row-gap: 12px;
+}
+
+body .MillenniumDesktopSidebar[data-focused-item-type="THEME"] .MillenniumDesktopSidebar_EditorContent .eKmEXJCm_lgme24Fp_HWt:has(.SliderControlPanelGroup) > ._1aw7cA3mAZfWt8idAlVJWi {
+    width: 100% !important;
+    max-width: none !important;
+}

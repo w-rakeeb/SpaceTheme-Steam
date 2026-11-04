@@ -34,6 +34,18 @@ function loadCSS(file, seen = new Set()) {
         });
         assert.deepEqual(state,{navBackground:'rgb(30, 30, 30)',navRadius:'8px',navWidth:1200,
             communityPanel:'rgb(30, 30, 30)',communitySearch:'rgb(17, 17, 17)',inputText:'rgb(220, 222, 223)',inputBackground:'rgb(17, 17, 17)'});
+        await page.evaluate(()=>{
+            document.body.classList.add('v6','responsive_page');
+            for(const cls of ['leftcol','rightcol']) {const node=document.createElement('div');node.className=cls;document.body.append(node);}
+            const footer=document.createElement('div');footer.id='footer';document.body.append(footer);
+        });
+        for(const width of [720,900,1010,1280]) {
+            await page.setViewportSize({width,height:800});
+            const sizes=await page.evaluate(()=>Object.fromEntries(['.leftcol','.rightcol','#footer'].map(s=>[s,document.querySelector(s).getBoundingClientRect().width])));
+            assert.ok(sizes['#footer']<=width-32,'footer fits embedded page');
+            if(width<=900) assert.ok(Math.abs(sizes['.leftcol']-sizes['.rightcol'])<1,'narrow Store columns stack at full width');
+            else assert.ok(sizes['.leftcol']+sizes['.rightcol']+16<=width-31,'two-column Store fits embedded page');
+        }
         console.log('PASS: current Store navbar width/colors/radius and Community panels/search fields.');
     } finally {await browser.close();}
 })().catch(error=>{console.error(error);process.exit(1);});

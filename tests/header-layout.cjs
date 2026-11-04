@@ -48,23 +48,24 @@ const root = require('node:path').resolve(__dirname, '..') + '/';
  },fs.readFileSync(root+'src/js/headerControls.js','utf8'));
  await page.addStyleTag({content:'* {transition: none !important;}'});
  const results=[];
- for(const width of [1010,1188,1280,1400,1682,1920]) {
+ for(const width of [1010,1188,1280,1400,1441,1560,1682,1920,2560]) {
   await page.setViewportSize({width,height:1035});
   const r=await page.evaluate(() => {
    const q=s=>document.querySelector(s), box=s=>q(s).getBoundingClientRect().toJSON();
    const panel=q('._3cykd-VfN_xBxf3Qxriccm');
    return {width:innerWidth,panel:box('._3cykd-VfN_xBxf3Qxriccm'),nav:box('._3Z3ohQ8-1NKnCZkbS6fvy'),opacity:getComputedStyle(panel).opacity,visibility:getComputedStyle(panel).visibility,margin:getComputedStyle(q('._1ijTaXJJA5YWl_fW2IxcaT')).marginBottom,bottom:getComputedStyle(q('._1_yS5UP7el0aN4vntx3dx')).bottom,buttons:[...q('.userpanel-buttoncontainer').children].map(x=>x.getBoundingClientRect().toJSON())};
   });
-  assert.equal(r.panel.y,7); assert.equal(r.panel.right,width-140);
+  assert.equal(r.panel.y,7); assert.equal(r.panel.right,width-152);
   assert.equal(r.opacity,'1'); assert.equal(r.visibility,'visible');
   assert.equal(await page.locator('._3cykd-VfN_xBxf3Qxriccm').evaluate(e=>getComputedStyle(e).backgroundColor),'rgba(0, 0, 0, 0)');
   assert.equal(await page.locator('._3yD46y5pd3zOGR7CzKs0mC').evaluate(e=>getComputedStyle(e).backgroundColor),'rgba(103, 112, 123, 0.2)');
   assert.equal(r.margin,'16px'); assert.equal(r.bottom,'16px');
   const overlap = r.nav.x < r.panel.right && r.nav.right > r.panel.x && r.nav.y < r.panel.bottom && r.nav.bottom > r.panel.y;
   assert.equal(overlap,false,`navigation overlap at ${width}`);
-  if(width>1680) for(const b of r.buttons) assert.ok(b.x>=r.panel.x && b.right<=r.panel.right && b.width===30);
-  assert.equal(Math.round(r.nav.x+r.nav.width/2),width/2);
-  results.push({width,panelWidth:r.panel.width,navigationRow:width<=1440?'second':'first',passed:true});
+  assert.equal(await page.locator('.st-header-more').isVisible(),true);
+  assert.equal(await page.locator('#st-header-utilities').isVisible(),false);
+  assert.ok(Math.abs(r.nav.x+r.nav.width/2-width/2)<1);
+  results.push({width,panelWidth:r.panel.width,navigationRow:width<=1560?'second':'first',passed:true});
  }
  await page.setViewportSize({width:1280,height:1035});
  await page.locator('.st-header-reload').click();
@@ -74,7 +75,8 @@ const root = require('node:path').resolve(__dirname, '..') + '/';
  assert.equal(await page.locator('.st-header-pinned > div').count(),3);
  assert.equal(await page.locator('.st-header-pinned').isVisible(),true);
  assert.equal(await menu.isVisible(),false);
- assert.equal(await page.locator('.avatarHolder .avatar').evaluate(e=>getComputedStyle(e).height),'24px');
+ assert.equal(await page.locator('.avatarHolder .avatar').evaluate(e=>getComputedStyle(e).height),'26px');
+ assert.equal(await page.locator('._3yD46y5pd3zOGR7CzKs0mC').evaluate(e=>getComputedStyle(e).fontSize),'14px');
  assert.equal(await page.locator('._3yD46y5pd3zOGR7CzKs0mC').evaluate(e=>getComputedStyle(e).overflow),'visible');
  await toggle.focus();await toggle.press('Enter');
  assert.equal(await toggle.getAttribute('aria-expanded'),'true');
@@ -99,7 +101,24 @@ const root = require('node:path').resolve(__dirname, '..') + '/';
  await page.setViewportSize({width:1920,height:1035});
  await page.waitForFunction(()=>document.querySelector('.st-header-more').getAttribute('aria-expanded')==='false');
  assert.equal(await toggle.getAttribute('aria-expanded'),'false');
- assert.equal(await menu.isVisible(),true);
+ assert.equal(await menu.isVisible(),false);
+ await toggle.click();
+ assert.equal(await menu.isVisible(),true,'maximized dropdown remains usable');
+ await toggle.click();
+ // Wallet text gets its own readable line while the larger account name stays clear.
+ await page.locator('._3yD46y5pd3zOGR7CzKs0mC').evaluate(profile=>{
+  profile.firstChild.textContent='Wrakeeb';
+  const wallet=document.createElement('span');wallet.className='_2jphjrSifC6orDT4g_7Wd';wallet.textContent='$1,234.56';profile.append(wallet);
+ });
+ const walletState=await page.locator('._3yD46y5pd3zOGR7CzKs0mC').evaluate(profile=>{
+  const range=document.createRange();range.selectNode(profile.firstChild);
+  const name=range.getBoundingClientRect(),wallet=profile.querySelector('._2jphjrSifC6orDT4g_7Wd');
+  return {nameBottom:name.bottom,walletTop:wallet.getBoundingClientRect().top,walletFont:getComputedStyle(wallet).fontSize};
+ });
+ assert.ok(walletState.walletTop>=walletState.nameBottom-1,'wallet must not overlap the account name');
+ assert.equal(walletState.walletFont,'11px');
+ await page.addStyleTag({content:fs.readFileSync(root+'options/general/walletBalance.css','utf8')});
+ assert.equal(await page.locator('._2jphjrSifC6orDT4g_7Wd').isVisible(),false,'official hide-wallet option still works');
  // The profile must remain visible when a hover-only store sidebar is collapsed.
  await page.evaluate(()=>document.querySelector('.RGNMWtyj73_-WdhflrmuY').style.display='none');
  assert.equal(await page.locator('._3cykd-VfN_xBxf3Qxriccm').evaluate(e=>getComputedStyle(e).opacity),'1');
