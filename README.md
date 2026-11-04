@@ -39,6 +39,29 @@ elements, and recycled Library rows refresh their game labels. See the
 
 Requires an existing [Millennium](https://steambrew.app/) installation.
 
+### Automatic Windows installation
+
+Download **SpaceTheme-Top-Right.zip** from the [latest release](https://github.com/w-rakeeb/SpaceTheme-Steam/releases/latest),
+extract the entire ZIP, open its `Steam` folder and double-click **Install.cmd**.
+Keep `Install.ps1` and the theme files beside it. Do not run it directly inside the ZIP.
+
+The installer detects Steam through the Windows registry, checks for Millennium,
+closes Steam normally, copies and verifies the theme, enables it with the top-right
+profile, and starts Steam. Close any running game first; the installer stops if
+Steam reports an active game and never force-kills processes.
+
+Existing theme files and Millennium configuration are backed up under
+`<Steam>/millennium/backups/SpaceTheme-<timestamp>-<id>/`. Other theme preferences
+and plugin selections are preserved. Theme scripts/styles and Millennium's CSS/JS
+injection are enabled so the theme can work. Size on Disk stays separate.
+If copying or saving fails, the installer attempts to restore the previous theme
+and configuration and displays the recovery folder. Steam may remain closed after
+a failed install. It does not install Millennium, request administrator rights,
+or modify games. If Steam cannot be detected, use
+`Install.cmd -SteamPath "C:\your\Steam"`. `-NoLaunch` leaves Steam closed afterwards.
+
+### Manual installation (alternative)
+
 1. Exit Steam normally. Back up the current theme folder and Millennium's `config/config.json` outside Steam.
 2. Download the [latest release](https://github.com/w-rakeeb/SpaceTheme-Steam/releases/latest) and extract `SpaceTheme-Top-Right.zip`.
 3. Copy its `Steam` folder into `<Steam>/millennium/themes/`. Replace an existing `Steam` theme only after backing it up.
@@ -57,7 +80,7 @@ The folder and display names are retained so existing SpaceTheme preferences can
 
 ## Scope and verification
 
-The additions are CSS and a small JavaScript header module. They add no installer, native DLL, service, scheduled task, startup entry, shell command, credential store, or game-file operation. Local activation-cleanup work is not included in this repository.
+The theme additions are CSS and a small JavaScript header module. The optional Windows installer changes only the theme and Millennium configuration and keeps backups. No native DLL, service, scheduled task, startup entry, credential store, or game-file operation is added. Local activation-cleanup work is not included in this repository.
 
 Automated checks cover layout widths, centered navigation, pinned controls, left-opening position, the lost-click regression, dismissal/keyboard behavior, and shortcut dispatch. The running Windows Steam client was also used to check the visible header, profile fit, dropdown, native Storage destination, and interface reload. Screenshots above are actual captures.
 
@@ -66,6 +89,12 @@ This cannot guarantee against Steam or Millennium bugs. Internal classes/APIs ma
 ## Rollback
 
 Exit Steam and restore your backed-up theme folder and configuration. For only the profile position, select **Sidebar (original)** and reload the theme. To use default Steam, disable the theme in Millennium.
+
+For installer backups: with Steam closed, move the installed
+`millennium/themes/Steam` folder elsewhere, move the backup's `previous-theme`
+folder back as `millennium/themes/Steam` if present, and restore the backup's
+`config.json` into `millennium/config/config.json`. If there was no previous
+theme, restoring the configuration and moving the new theme away is sufficient.
 
 ## Credits and license
 
