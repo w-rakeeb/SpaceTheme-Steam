@@ -31,6 +31,9 @@ Assert ($config.general.keep -eq 42 -and $config.plugins.enabledPlugins[0] -eq '
 $backup = Get-ChildItem -LiteralPath (Join-Path $fixture 'millennium\backups') -Directory | Select-Object -First 1
 Assert (Test-Path -LiteralPath (Join-Path $backup.FullName 'previous-theme\old.txt')) 'Original theme was not backed up.'
 Assert ((Get-FileHash (Join-Path $fixture 'millennium\themes\Steam\skin.json')).Hash -eq (Get-FileHash (Join-Path $repo 'skin.json')).Hash) 'Installed theme mismatch.'
+if (Test-Path -LiteralPath (Join-Path $repo 'metadata.json')) {
+    Assert ((Get-FileHash (Join-Path $fixture 'millennium\themes\Steam\metadata.json')).Hash -eq (Get-FileHash (Join-Path $repo 'metadata.json')).Hash) 'Update metadata missing or changed.'
+}
 Assert ((Install $fixture) -eq 0) 'Repeat installation failed.'
 
 $invalid = New-Fixture 'invalid config' '{broken'

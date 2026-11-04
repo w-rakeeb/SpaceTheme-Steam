@@ -75,7 +75,8 @@ body .MillenniumDesktopSidebar[data-focused-item-type="THEME"] .MillenniumDeskto
     row-gap: 12px;
 }
 
-body .MillenniumDesktopSidebar[data-focused-item-type="THEME"] .MillenniumDesktopSidebar_EditorContent .eKmEXJCm_lgme24Fp_HWt:has(.SliderControlPanelGroup) > ._1aw7cA3mAZfWt8idAlVJWi {
+body .MillenniumDesktopSidebar[data-focused-item-type="THEME"] .MillenniumDesktopSidebar_EditorContent .eKmEXJCm_lgme24Fp_HWt:has(.SliderControlPanelGroup) > :is(.PSZtxj2h3MlyYv-c9dgke, ._1aw7cA3mAZfWt8idAlVJWi) {
     width: 100% !important;
     max-width: none !important;
+    justify-self: stretch;
 }

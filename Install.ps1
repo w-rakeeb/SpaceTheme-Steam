@@ -47,6 +47,17 @@ try {
     if ($manifest.github.owner -ne 'w-rakeeb' -or $manifest.github.repo_name -ne 'SpaceTheme-Steam') {
         throw 'This installer requires the SpaceTheme Top Right Edition package.'
     }
+    $payload = @('skin.json', 'src', 'options', 'LICENSE')
+    $metadataPath = Join-Path $PSScriptRoot 'metadata.json'
+    if (Test-Path -LiteralPath $metadataPath) {
+        $metadata = Get-Content -LiteralPath $metadataPath -Raw | ConvertFrom-Json
+        if ($metadata.owner -ne 'w-rakeeb' -or $metadata.repo -ne 'SpaceTheme-Steam' -or $metadata.commit -notmatch '^[a-f0-9]{40}$') {
+            throw 'The package contains invalid update metadata. Download a fresh release ZIP.'
+        }
+        $payload += 'metadata.json'
+    } else {
+        Write-Host 'Source checkout: update metadata is absent. Use the release ZIP for Millennium update tracking.'
+    }
 
     if (-not $SteamPath) {
         $candidates = @(
@@ -119,7 +130,7 @@ try {
     Copy-Item -LiteralPath $configPath -Destination (Join-Path $backup 'config.json')
     $stage = Join-Path $backup 'new-theme'
     New-Item -ItemType Directory -Path $stage | Out-Null
-    foreach ($name in @('skin.json', 'src', 'options', 'LICENSE')) {
+    foreach ($name in $payload) {
         $source = Join-Path $PSScriptRoot $name
         Assert-NoLink $source
         if (Get-ChildItem -LiteralPath $source -Recurse -Force | Where-Object { $_.Attributes -band [IO.FileAttributes]::ReparsePoint }) {

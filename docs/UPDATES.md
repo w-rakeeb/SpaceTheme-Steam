@@ -37,8 +37,18 @@ merge can guarantee compatibility with arbitrary future Steam/internal API chang
   DOM-reparenting script, preserving React's ownership of option controls.
 - Product/bundle columns use actual viewport width and stack below 900px. The
   footer fits the viewport; search input expansion is constrained on narrow pages.
-- Five JavaScript suites and the CMD/PowerShell installer suite cover these changes.
+- Moved native controls retain handlers and forward only their own reconciliation
+  insert/replace/remove operations from their original parents, avoiding the
+  `insertBefore` rendering error reproduced while opening quick settings.
+- Release ZIPs include Millennium update metadata; the installer preserves it.
+- Six JavaScript suites and the CMD/PowerShell installer suite cover these changes.
 
 Tests remain representative DOM/browser checks, not proof of every Steam page,
 account, language, optional plugin or future upstream state. Live Windows captures
 and release notes record the additional checks actually performed.
+
+Live checks on 4 November covered Library home with the current official sidebar,
+Store home, Portal's Store page, Community, repeated quick-settings opening, and
+the utility dropdown in a maximized 2560px window. The rendering exception was
+reproduced before the moved-control fix. No further matching exception was seen
+during the subsequent checks. No game was launched and no purchase was made.

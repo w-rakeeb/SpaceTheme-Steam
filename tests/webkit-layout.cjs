@@ -35,9 +35,14 @@ function loadCSS(file, seen = new Set()) {
         assert.deepEqual(state,{navBackground:'rgb(30, 30, 30)',navRadius:'8px',navWidth:1200,
             communityPanel:'rgb(30, 30, 30)',communitySearch:'rgb(17, 17, 17)',inputText:'rgb(220, 222, 223)',inputBackground:'rgb(17, 17, 17)'});
         await page.evaluate(()=>{
-            document.body.classList.add('v6','responsive_page');
+            document.body.classList.add('v6','responsive_page','game_bg','application');
             for(const cls of ['leftcol','rightcol']) {const node=document.createElement('div');node.className=cls;document.body.append(node);}
             const footer=document.createElement('div');footer.id='footer';document.body.append(footer);
+            const glow=document.createElement('div');glow.className='game_background_glow';document.body.append(glow);
+            const highlights=document.createElement('div');highlights.id='game_highlights';glow.append(highlights);
+            const media=document.createElement('div');media.className='leftcol';media.style.height='120px';highlights.append(media);
+            const highlight=document.createElement('div');highlight.className='highlight_ctn';media.append(highlight);
+            const details=document.createElement('div');details.className='rightcol';details.style.height='120px';highlights.append(details);
         });
         for(const width of [720,900,1010,1280]) {
             await page.setViewportSize({width,height:800});
@@ -45,6 +50,7 @@ function loadCSS(file, seen = new Set()) {
             assert.ok(sizes['#footer']<=width-32,'footer fits embedded page');
             if(width<=900) assert.ok(Math.abs(sizes['.leftcol']-sizes['.rightcol'])<1,'narrow Store columns stack at full width');
             else assert.ok(sizes['.leftcol']+sizes['.rightcol']+16<=width-31,'two-column Store fits embedded page');
+            if(width<=900) assert.ok(await page.locator('#game_highlights').evaluate(el=>el.lastChild.getBoundingClientRect().top>=el.firstChild.getBoundingClientRect().bottom),'product grid stacks media and details on narrow pages');
         }
         console.log('PASS: current Store navbar width/colors/radius and Community panels/search fields.');
     } finally {await browser.close();}

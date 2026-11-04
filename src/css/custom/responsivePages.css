@@ -22,6 +22,12 @@ html body.responsive_page #footer {
 }
 
 @media (max-width: 900px) {
+    html body.game_bg.application .game_background_glow #game_highlights {
+        grid-template-areas: "media" "details";
+        grid-template-columns: minmax(0, 1fr);
+        grid-auto-columns: auto;
+    }
+
     html body.v6 :is(.leftcol, .rightcol),
     html body.game_bg :is(.game_description_column, .game_meta_data) {
         float: none;

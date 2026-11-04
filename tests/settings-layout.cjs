@@ -26,6 +26,11 @@ function css(file, seen = new Set()) {
             add(label, '_2VcTlXFC64Jtg9gvtT6cmY', 'Always show sidebar');
             add(label, '_1W1to_azoBRG95oNAFpf9Q', 'Show the sidebar on Library, Store and Community pages.');
             const control=add(row, 'PSZtxj2h3MlyYv-c9dgke', 'On');control.id='setting-control';
+            const sliderRow=add(content,'eKmEXJCm_lgme24Fp_HWt');
+            const sliderLabel=add(sliderRow,'_2tALpM7z8naXJ35Pp5fNAG');
+            add(sliderLabel,'_2VcTlXFC64Jtg9gvtT6cmY','Sidebar width');
+            const sliderControl=add(sliderRow,'PSZtxj2h3MlyYv-c9dgke');sliderControl.id='slider-control';
+            add(sliderControl,'SliderControlPanelGroup','256px');
             for (let i=0;i<30;i++) add(content, 'DialogBody', 'Window Controls / Sidebar width / Userpanel position').style.height='60px';
         });
         await page.addStyleTag({content:css('src/css/root.css') + css('src/css/regular.css') + '\n.MillenniumDesktopSidebar{display:flex;flex-direction:column}'});
@@ -44,6 +49,7 @@ function css(file, seen = new Set()) {
                 return {labelWidth:label.width,labelRight:label.right,controlLeft:control.left,controlWidth:control.width};
             });
             assert.ok(row.labelWidth>400 && row.labelRight<row.controlLeft && row.controlWidth<100,JSON.stringify(row));
+            assert.ok(await page.locator('#slider-control').evaluate(el=>el.getBoundingClientRect().width>500),'slider uses the full option width');
         }
         console.log('PASS: settings dialog remains unscaled, bounded and scrollable at four window sizes.');
     } finally {await browser.close();}

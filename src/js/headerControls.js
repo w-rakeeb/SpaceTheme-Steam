@@ -1,4 +1,6 @@
-// Keep Steam's original utility elements in place so their handlers and popovers survive.
+import { moveControl } from './moveControl.js';
+
+// Keep Steam's original utility elements so their handlers and popovers survive.
 export function setupHeaderControls(parent, utilities) {
     if (parent.querySelector('.st-header-reload') ||
         getComputedStyle(document.documentElement).getPropertyValue('--st-header-top-right').trim() !== '1') return;
@@ -7,7 +9,7 @@ export function setupHeaderControls(parent, utilities) {
     pinned.className = 'userpanel-buttoncontainer st-header-pinned';
     const pinnedSelector = '._5wILZhsLODVwGfcJ0hKmJ, ._3mGEzzp18imtSzGPkduedi, ._1TdaAqMFadi0UTqilrkelR';
     for (const control of Array.from(utilities.children)) {
-        if (control.matches(pinnedSelector) || control.querySelector(pinnedSelector)) pinned.appendChild(control);
+        if (control.matches(pinnedSelector) || control.querySelector(pinnedSelector)) moveControl(control, pinned);
     }
     parent.appendChild(pinned);
 

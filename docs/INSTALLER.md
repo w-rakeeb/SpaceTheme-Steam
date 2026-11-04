@@ -39,3 +39,8 @@ malformed config rejection and rollback when config replacement is locked.
 Real Steam shutdown/restart, registry detection on another PC, restricted install
 permissions, and third-party antivirus handling require recipient-PC checks.
 The installer does not install/update Millennium itself or alter game files.
+
+Release ZIPs include `metadata.json` with the fork identity and packaged commit.
+The installer validates and copies this so Millennium can track theme updates.
+A plain GitHub source ZIP lacks that generated file; use the release ZIP for
+normal updater tracking. Existing plugin selections and theme options are preserved.

@@ -39,13 +39,13 @@ const root = require('node:path').resolve(__dirname, '..') + '/';
  await page.addStyleTag({content: ':root {--st-border-radius:8px;--st-color-2:30,30,30;--st-color-3:20,20,20} body {font:13px Arial;color:white;background:#0a0a0a} ._39oUCO1OuizVPwcnnv88no, ._3cykd-VfN_xBxf3Qxriccm, ._3yD46y5pd3zOGR7CzKs0mC {display:flex;align-items:center} ._2D64jIEK7wpUR_NlObDW76 {display:flex;width:470px} ._3cykd-VfN_xBxf3Qxriccm {display:flex}'});
  for (const f of ['src/css/steam/titlebar.css','src/css/steam/sidebar.css','options/general/sidebarOnRight.css','options/general/showSidebarOnHover.css','options/general/userpanel/topRight.css'])
   await page.addStyleTag({content:fs.readFileSync(root+f,'utf8')});
- await page.evaluate(source=>{
+ await page.evaluate(({source,movement})=>{
   window.reloadCalls=0;
   window.storageURLs=[];
   window.SteamClient={Browser:{RestartJSContext(){window.reloadCalls++}},URL:{ExecuteSteamURL(url){window.storageURLs.push(url)}}};
-  const setup=new Function(source.replace('export function setupHeaderControls','function setupHeaderControls')+';return setupHeaderControls;')();
+  const setup=new Function(movement.replace('export function','function')+'\n'+source.replace(/import .*?;\s*/,'').replace('export function setupHeaderControls','function setupHeaderControls')+';return setupHeaderControls;')();
   setup(document.querySelector('._3cykd-VfN_xBxf3Qxriccm'),document.querySelector('.userpanel-buttoncontainer'));
- },fs.readFileSync(root+'src/js/headerControls.js','utf8'));
+ },{source:fs.readFileSync(root+'src/js/headerControls.js','utf8'),movement:fs.readFileSync(root+'src/js/moveControl.js','utf8')});
  await page.addStyleTag({content:'* {transition: none !important;}'});
  const results=[];
  for(const width of [1010,1188,1280,1400,1441,1560,1682,1920,2560]) {

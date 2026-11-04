@@ -1,5 +1,6 @@
 import { waitForElement, createContainerTracker, getFiber, CssClassNames } from './utils.js';
 import { setupHeaderControls } from './headerControls.js';
+import { moveControl } from './moveControl.js';
 
 // Create Loading Screen
 const createLoadingDiv = () => {
@@ -497,12 +498,12 @@ syncUserPanelWidth();
     });
 
     buttonsToMove.forEach((button) => {
-        buttonContainer.appendChild(button);
+        moveControl(button, buttonContainer);
     });
 
-    buttonContainer.appendChild(friendButton);
+    moveControl(friendButton, buttonContainer);
     if (familyButton) {
-        buttonContainer.appendChild(familyButton);
+        moveControl(familyButton, buttonContainer);
     }
 
     // Create custom settings button

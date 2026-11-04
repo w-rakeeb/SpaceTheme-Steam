@@ -51,7 +51,7 @@ jobs:
       - name: Verify theme and custom additions
         shell: pwsh
         run: |
-          foreach ($test in @('theme-integrity', 'header-layout', 'utils', 'webkit-layout', 'settings-layout')) {
+          foreach ($test in @('theme-integrity', 'header-layout', 'moved-controls', 'utils', 'webkit-layout', 'settings-layout')) {
             node "tests/$test.cjs"
             if ($LASTEXITCODE) { throw "Failed: $test" }
           }
@@ -74,6 +74,13 @@ jobs:
           $tag = 'upstream-' + (Get-Date -Format 'yyyyMMdd-HHmmss') + '-' + $short
           git archive --format=zip --prefix=Steam/ --output=SpaceTheme-Top-Right.zip HEAD
           if ($LASTEXITCODE) { throw 'Archive creation failed.' }
+          Add-Type -AssemblyName System.IO.Compression.FileSystem
+          $zip = [IO.Compression.ZipFile]::Open((Join-Path $pwd 'SpaceTheme-Top-Right.zip'), [IO.Compression.ZipArchiveMode]::Update)
+          try {
+            $entry = $zip.CreateEntry('Steam/metadata.json')
+            $writer = [IO.StreamWriter]::new($entry.Open(), [Text.UTF8Encoding]::new($false))
+            try { $writer.Write((@{owner='w-rakeeb';repo='SpaceTheme-Steam';commit=$commit} | ConvertTo-Json)) } finally { $writer.Dispose() }
+          } finally { $zip.Dispose() }
           $hash = (Get-FileHash SpaceTheme-Top-Right.zip -Algorithm SHA256).Hash.ToLowerInvariant()
           "$hash  SpaceTheme-Top-Right.zip" | Set-Content SpaceTheme-Top-Right.sha256 -Encoding ascii
           gh release create $tag SpaceTheme-Top-Right.zip SpaceTheme-Top-Right.sha256 --target $commit --title "Official SpaceTheme sync - $commit" --notes 'Official SpaceTheme updates merged with the Top Right Edition. Asset, script scope, header, settings, page-layout and installer checks passed. Conflicting or failing updates are held for review. See README for installation and screenshots.'
