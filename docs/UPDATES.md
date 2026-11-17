@@ -16,11 +16,13 @@ tests must pass before the merged commit is pushed to this fork and a release ZI
 is created. The custom module, integration call, installer, updater identity and
 Size on Disk exclusion are explicitly checked.
 
-Millennium's regular theme updater reads this fork's GitHub identity, so verified
-upstream changes arrive with the custom additions. Users must leave normal theme
-update checks enabled and apply updates when Millennium requests it. This adds no
-background updater process or task to Windows. The six-hour schedule runs on
-GitHub, may be delayed, and can be disabled by GitHub after prolonged inactivity.
+The six-hour sync runs on GitHub and publishes updates with the custom additions.
+GitHub may delay schedules or disable them after prolonged inactivity.
+
+Millennium sends the theme's GitHub identity to SteamBrew's update service. In
+November 2026 the service returned the official repository but omitted this fork
+when queried for both. Until that service lists the fork, update by extracting
+the latest release ZIP and running `Steam/Install.cmd` after closing any running game.
 
 If upstream changes conflict with local edits or verification fails, the workflow
 fails without pushing that merge. A maintainer needs to resolve it. No automatic

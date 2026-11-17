@@ -56,7 +56,7 @@ try {
         }
         $payload += 'metadata.json'
     } else {
-        Write-Host 'Source checkout: update metadata is absent. Use the release ZIP for Millennium update tracking.'
+        Write-Host 'Source checkout: release metadata is absent. Use the release ZIP to record the packaged commit.'
     }
 
     if (-not $SteamPath) {

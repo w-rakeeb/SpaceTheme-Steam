@@ -41,6 +41,6 @@ permissions, and third-party antivirus handling require recipient-PC checks.
 The installer does not install/update Millennium itself or alter game files.
 
 Release ZIPs include `metadata.json` with the fork identity and packaged commit.
-The installer validates and copies this so Millennium can track theme updates.
-A plain GitHub source ZIP lacks that generated file; use the release ZIP for
-normal updater tracking. Existing plugin selections and theme options are preserved.
+The installer validates and copies it to record the installed build. SteamBrew's
+update service currently omits this fork, so use the latest release ZIP and run
+`Install.cmd` to update. Existing plugin selections and other theme options are preserved.

@@ -36,9 +36,9 @@ publishes only successful merges. Conflicts or failed checks stop publication;
 they require maintenance rather than overwriting customizations. Scheduled checks
 can be delayed by GitHub and inactive repositories can have schedules disabled.
 
-Millennium continues to receive this fork through its normal theme updater, so
-keep theme update checks enabled. It does not fetch raw official files directly
-over our installation. The CMD installer remains available for manual updating.
+SteamBrew's update service currently omits this fork, so Millennium's Updates
+tab won't list these releases. To update, download the latest release ZIP,
+extract it, and run `Steam/Install.cmd` after closing any running game.
 See [update details and verification](docs/UPDATES.md).
 
 ![Sharp, scrollable SpaceTheme settings](.github/screenshots/settings.png)
