@@ -99,6 +99,22 @@ const root = require('node:path').resolve(__dirname, '..') + '/';
  await toggle.click();await page.locator('.st-header-storage').click();
  assert.deepEqual(await page.evaluate(()=>window.storageURLs),['steam://open/settings/storage']);
  assert.equal(await toggle.getAttribute('aria-expanded'),'false');
+ const conditions = JSON.parse(fs.readFileSync(root+'skin.json','utf8')).Conditions;
+ assert.equal(conditions['Userpanel position'].tab,'Top Right Edition');
+ assert.equal(conditions['Userpanel position'].section,'Profile layout');
+ await toggle.click();
+ for (const [option, button] of [['Reload shortcut','.st-header-reload'],['Storage shortcut','.st-header-storage']]) {
+  const condition = conditions[option];
+  assert.equal(condition.tab,'Top Right Edition');
+  assert.equal(condition.section,'Header shortcuts');
+  assert.equal(condition.default,'yes');
+  assert.ok(await page.locator(button).isVisible());
+  const style = await page.addStyleTag({path:root+condition.values.no.TargetCss.src});
+  assert.equal(await page.locator(button).isVisible(),false);
+  await style.evaluate(element=>element.remove());
+  assert.ok(await page.locator(button).isVisible());
+ }
+ await toggle.click();
  await toggle.click();
  await page.setViewportSize({width:1920,height:1035});
  await page.waitForFunction(()=>document.querySelector('.st-header-more').getAttribute('aria-expanded')==='false');

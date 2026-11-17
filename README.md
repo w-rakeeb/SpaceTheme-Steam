@@ -13,7 +13,7 @@ A focused fork of [SpaceTheme/Steam](https://github.com/SpaceTheme/Steam), maint
 - **Reload shortcut:** uses Steam's `Browser.RestartJSContext()` to reload its interface, without intentionally exiting Steam or restarting Windows.
 - **Storage shortcut:** opens Steam's native Settings → Storage page.
 - **Manage Downloads icon:** restores the idle download icon without duplicating it during active downloads.
-- **Original layout:** General → Userpanel → Userpanel position → **Sidebar (original)** restores the upstream profile position. **Top right** is this fork's default.
+- **Top Right Edition tab:** **Profile layout** selects the top-right or original sidebar position. **Header shortcuts** controls the Reload and Storage buttons.
 
 ![Left-opening dropdown and profile controls](.github/screenshots/header-dropdown.png)
 
@@ -29,12 +29,8 @@ shortcuts, installer and compatibility fixes remain alongside it. Settings use
 an unscaled, scrollable editor and CSS layout instead of moving React-owned nodes.
 Store columns and the footer adapt to the embedded browser width.
 
-An [upstream synchronization workflow](.github/workflows/upstream.yml) checks the
-official repository every six hours and can also be run manually. It merges
-updates with this edition, runs the browser/asset/script/installer checks, and
-publishes only successful merges. Conflicts or failed checks stop publication;
-they require maintenance rather than overwriting customizations. Scheduled checks
-can be delayed by GitHub and inactive repositories can have schedules disabled.
+Official SpaceTheme changes are reviewed and merged manually. GitHub Actions
+validates the fork after changes are pushed. Release ZIPs are published manually.
 
 SteamBrew's update service currently omits this fork, so Millennium's Updates
 tab won't list these releases. To update, download the latest release ZIP,
@@ -88,7 +84,7 @@ or modify games. If Steam cannot be detected, use
 2. Download the [latest release](https://github.com/w-rakeeb/SpaceTheme-Steam/releases/latest) and extract `SpaceTheme-Top-Right.zip`.
 3. Copy its `Steam` folder into `<Steam>/millennium/themes/`. Replace an existing `Steam` theme only after backing it up.
 4. Start Steam, open **Steam → Millennium → Themes**, and select **SpaceTheme for Steam**. Allow theme scripts/styles.
-5. Set **Userpanel position → Top right** in theme settings if necessary.
+5. In theme settings, open **Top Right Edition → Profile layout** and set **Userpanel position** to **Top right** if necessary.
 
 Alternatively, download this repository's source ZIP and copy the folder containing `skin.json` as `<Steam>/millennium/themes/Steam`.
 

@@ -129,13 +129,37 @@
         "Userpanel position": {
             "description": "Place the profile and its controls together in the top-right titlebar, or restore the sidebar layout.",
             "default": "Top right",
-            "tab": "General",
-            "section": "Userpanel",
+            "tab": "Top Right Edition",
+            "section": "Profile layout",
             "values": {
                 "Top right": {
                     "TargetCss": { "affects": ["^Steam$"], "src": "options/general/userpanel/topRight.css" }
                 },
                 "Sidebar (original)": {}
+            }
+        },
+        "Reload shortcut": {
+            "description": "Show the Reload Steam interface button in the top-right header.",
+            "default": "yes",
+            "tab": "Top Right Edition",
+            "section": "Header shortcuts",
+            "values": {
+                "yes": {},
+                "no": {
+                    "TargetCss": { "affects": ["^Steam$"], "src": "options/general/userpanel/buttons/hideReload.css" }
+                }
+            }
+        },
+        "Storage shortcut": {
+            "description": "Show the Storage shortcut in the top-right dropdown.",
+            "default": "yes",
+            "tab": "Top Right Edition",
+            "section": "Header shortcuts",
+            "values": {
+                "yes": {},
+                "no": {
+                    "TargetCss": { "affects": ["^Steam$"], "src": "options/general/userpanel/buttons/hideStorage.css" }
+                }
             }
         },
         "Wallet balance": {

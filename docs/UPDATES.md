@@ -1,6 +1,6 @@
 # Official SpaceTheme updates with custom controls
 
-The fork includes official SpaceTheme history through ddfbbbe (4 November 2026).
+The fork includes official SpaceTheme history through `65bc106` (12 November 2026).
 Upstream's current collection sidebar, settings styles, resize handle and wallet
 option fix are included. Changes specific to this edition remain in their own
 header/settings/responsive styles and header module where possible; integration
@@ -8,25 +8,19 @@ points and manifest safety fixes remain deliberate small upstream-file changes.
 
 ## Update route
 
-Every six hours GitHub Actions fetches SpaceTheme/Steam main and attempts a normal
-three-way merge. It never uses an overwrite strategy or force-push. Asset/script
-scope checks, nine header widths, dropdown interactions, wallet placement, settings
-layout, web page columns, observer/recycled-label checks and the Windows installer
-tests must pass before the merged commit is pushed to this fork and a release ZIP
-is created. The custom module, integration call, installer, updater identity and
-Size on Disk exclusion are explicitly checked.
-
-The six-hour sync runs on GitHub and publishes updates with the custom additions.
-GitHub may delay schedules or disable them after prolonged inactivity.
+Maintainers fetch and review official SpaceTheme changes manually, resolve any
+conflicts with the custom controls, and run the regression checks before publishing
+a release ZIP. GitHub Actions runs validation on pushes to `main` and on manual
+request. The workflow has read-only permissions.
 
 Millennium sends the theme's GitHub identity to SteamBrew's update service. In
 November 2026 the service returned the official repository but omitted this fork
 when queried for both. Until that service lists the fork, update by extracting
 the latest release ZIP and running `Steam/Install.cmd` after closing any running game.
 
-If upstream changes conflict with local edits or verification fails, the workflow
-fails without pushing that merge. A maintainer needs to resolve it. No automatic
-merge can guarantee compatibility with arbitrary future Steam/internal API changes.
+Theme settings are available under **Top Right Edition** in the settings dropdown.
+**Profile layout** contains the position setting, and **Header shortcuts** contains
+the Reload and Storage switches.
 
 ## Current fixes and checks
 
