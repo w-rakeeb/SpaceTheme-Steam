@@ -482,12 +482,29 @@ syncUserPanelWidth();
 
 
 // Create userpanel button container and move buttons
-(async () => {
-    await waitForElement(CssClassNames.Library.Container); // wait for game panel to load first
-    // Userpanel
-    const friendButton = await waitForElement(CssClassNames.UserPanel.FriendButton);
-    const familyButton = document.querySelector(CssClassNames.UserPanel.FamilyButton);
-    const parent = await waitForElement(CssClassNames.UserPanel.Container);
+// React remounts the userpanel and the bottom bar (e.g. during startup), which drops the moved buttons,
+// so this runs on every DOM change and only does work when something is missing.
+const buildUserPanel = () => {
+    const parent = document.querySelector(CssClassNames.UserPanel.Container);
+    if (!parent) return;
+
+    const restoreBottomBarControls = utilities => {
+        const pinned = parent.querySelector(':scope > .st-header-pinned');
+        for (const [selector, target] of [
+            [CssClassNames.UserPanel.FriendButton, pinned ?? utilities],
+            [CssClassNames.UserPanel.FamilyButton, utilities],
+        ]) {
+            if (target.querySelector(selector)) continue;
+            const button = Array.from(document.querySelectorAll(selector)).find(control => !parent.contains(control));
+            if (button) moveControl(button, target);
+        }
+    };
+
+    const existing = parent.querySelector(':scope > .userpanel-buttoncontainer:not(.st-header-pinned)');
+    if (existing) {
+        restoreBottomBarControls(existing);
+        return;
+    }
 
     const buttonContainer = document.createElement('div');
     buttonContainer.className = 'userpanel-buttoncontainer';
@@ -500,11 +517,6 @@ syncUserPanelWidth();
     buttonsToMove.forEach((button) => {
         moveControl(button, buttonContainer);
     });
-
-    moveControl(friendButton, buttonContainer);
-    if (familyButton) {
-        moveControl(familyButton, buttonContainer);
-    }
 
     // Create custom settings button
     const settingsButton = document.createElement('div');
@@ -531,6 +543,14 @@ syncUserPanelWidth();
 
     parent.appendChild(buttonContainer);
     setupHeaderControls(parent, buttonContainer);
+    restoreBottomBarControls(buttonContainer);
+};
+
+(async () => {
+    await waitForElement(CssClassNames.Library.Container); // wait for game panel to load first
+
+    new MutationObserver(buildUserPanel).observe(document.body, { subtree: true, childList: true });
+    buildUserPanel();
 })();
 
 

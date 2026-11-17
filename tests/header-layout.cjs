@@ -39,13 +39,15 @@ const root = require('node:path').resolve(__dirname, '..') + '/';
  await page.addStyleTag({content: ':root {--st-border-radius:8px;--st-color-2:30,30,30;--st-color-3:20,20,20} body {font:13px Arial;color:white;background:#0a0a0a} ._39oUCO1OuizVPwcnnv88no, ._3cykd-VfN_xBxf3Qxriccm, ._3yD46y5pd3zOGR7CzKs0mC {display:flex;align-items:center} ._2D64jIEK7wpUR_NlObDW76 {display:flex;width:470px} ._3cykd-VfN_xBxf3Qxriccm {display:flex}'});
  for (const f of ['src/css/steam/titlebar.css','src/css/steam/sidebar.css','options/general/sidebarOnRight.css','options/general/showSidebarOnHover.css','options/general/userpanel/topRight.css'])
   await page.addStyleTag({content:fs.readFileSync(root+f,'utf8')});
- await page.evaluate(({source,movement})=>{
+ await page.evaluate(({source,movement,builder})=>{
   window.reloadCalls=0;
   window.storageURLs=[];
   window.SteamClient={Browser:{RestartJSContext(){window.reloadCalls++}},URL:{ExecuteSteamURL(url){window.storageURLs.push(url)}}};
-  const setup=new Function(movement.replace('export function','function')+'\n'+source.replace(/import .*?;\s*/,'').replace('export function setupHeaderControls','function setupHeaderControls')+';return setupHeaderControls;')();
-  setup(document.querySelector('._3cykd-VfN_xBxf3Qxriccm'),document.querySelector('.userpanel-buttoncontainer'));
- },{source:fs.readFileSync(root+'src/js/headerControls.js','utf8'),movement:fs.readFileSync(root+'src/js/moveControl.js','utf8')});
+  const classes = {UserPanel:{Container:'._3cykd-VfN_xBxf3Qxriccm',Button:'._2Szzh5sKyGgnLUR870zbDE',FriendButton:'._1TdaAqMFadi0UTqilrkelR',FamilyButton:'._13vrqU6oOqmmxrsZSW5O39'}};
+  const {setupHeaderControls,buildUserPanel}=new Function('CssClassNames',movement.replace('export function','function')+'\n'+source.replace(/import .*?;\s*/,'').replace('export function setupHeaderControls','function setupHeaderControls')+'\n'+builder+';return {setupHeaderControls,buildUserPanel};')(classes);
+  setupHeaderControls(document.querySelector(classes.UserPanel.Container),document.querySelector('.userpanel-buttoncontainer'));
+  window.buildUserPanel=buildUserPanel;
+ },{source:fs.readFileSync(root+'src/js/headerControls.js','utf8'),movement:fs.readFileSync(root+'src/js/moveControl.js','utf8'),builder:fs.readFileSync(root+'src/js/libraryroot.custom.js','utf8').match(/const buildUserPanel = \(\) => \{[\s\S]*?\n};/)[0]});
  await page.addStyleTag({content:'* {transition: none !important;}'});
  const results=[];
  for(const width of [1010,1188,1280,1400,1441,1560,1682,1920,2560]) {
@@ -127,12 +129,37 @@ const root = require('node:path').resolve(__dirname, '..') + '/';
  await page.addStyleTag({content:fs.readFileSync(root+'options/general/alwaysShowDownloadbar.css','utf8')});
  assert.equal(await page.locator('._1ijTaXJJA5YWl_fW2IxcaT').evaluate(e=>getComputedStyle(e).marginBottom),'71px');
  // Turning the option off must restore the upstream sidebar space and width.
+ const topRightCSS = fs.readFileSync(root+'options/general/userpanel/topRight.css','utf8');
  await page.evaluate(()=>{
   for(const style of document.querySelectorAll('style'))
    if(style.textContent.includes('--st-userpanel-space: 0px')) style.remove();
  });
  assert.equal(await page.locator('._1ijTaXJJA5YWl_fW2IxcaT').evaluate(e=>getComputedStyle(e).marginBottom),'211px');
  assert.equal(await page.locator('._3cykd-VfN_xBxf3Qxriccm').evaluate(e=>getComputedStyle(e).width),'256px');
+ await page.addStyleTag({content:topRightCSS});
+ const remounted = await page.evaluate(() => {
+  const previous = document.querySelector('._3cykd-VfN_xBxf3Qxriccm');
+  const panel = document.createElement('div');
+  panel.className = previous.className;
+  previous.replaceWith(panel);
+  window.buildUserPanel();
+  const bottomBar = document.body.appendChild(document.createElement('div'));
+  const friendsClass = '_1TdaAqMFadi0UTqilrkelR';
+  const familyClass = '_13vrqU6oOqmmxrsZSW5O39';
+  for (let visit = 0; visit < 2; visit++) {
+   const friends = bottomBar.appendChild(document.createElement('div'));
+   friends.className = friendsClass;
+   const family = bottomBar.appendChild(document.createElement('div'));
+   family.className = familyClass;
+   window.buildUserPanel();
+   window.buildUserPanel();
+   if (!friends.closest('.st-header-pinned') || !family.closest('#st-header-utilities')) return false;
+   bottomBar.removeChild(friends);
+   bottomBar.removeChild(family);
+  }
+  return panel.querySelectorAll('.st-header-more').length === 1;
+ });
+ assert.ok(remounted,'remounted panels and bottom bars restore Friends and Family without duplicating the dropdown');
  console.log(JSON.stringify(results));
  await browser.close();
 })().catch(e=>{console.error(e);process.exit(1)});

@@ -1,9 +1,15 @@
 import { moveControl } from './moveControl.js';
 
+let headerListeners;
+
 // Keep Steam's original utility elements so their handlers and popovers survive.
 export function setupHeaderControls(parent, utilities) {
     if (parent.querySelector('.st-header-reload') ||
         getComputedStyle(document.documentElement).getPropertyValue('--st-header-top-right').trim() !== '1') return;
+
+    headerListeners?.abort();
+    headerListeners = new AbortController();
+    const listenerOptions = { signal: headerListeners.signal };
 
     const pinned = document.createElement('div');
     pinned.className = 'userpanel-buttoncontainer st-header-pinned';
@@ -65,7 +71,7 @@ export function setupHeaderControls(parent, utilities) {
     });
     document.addEventListener('pointerdown', event => {
         if (!parent.contains(event.target)) setOpen(false);
-    });
+    }, listenerOptions);
     parent.addEventListener('keydown', event => {
         if (event.key === 'Escape' && toggle.getAttribute('aria-expanded') === 'true') {
             setOpen(false, true);
@@ -76,6 +82,6 @@ export function setupHeaderControls(parent, utilities) {
         // Steam's icon divs are not focusable; clicking one produces a null target.
         if (event.relatedTarget && !parent.contains(event.relatedTarget)) setOpen(false);
     });
-    window.addEventListener('resize', () => setOpen(false));
+    window.addEventListener('resize', () => setOpen(false), listenerOptions);
     parent.append(reload, toggle);
 }
